@@ -3,60 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Página</title>
+    <title>Tu Evento</title>
 
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-    <header>
-        <h1>Tu Evento</h1>
-    </header>
+<header>
 
-    <nav>
-        <a href="#">Inicio</a>
-        <a href="#">Servicios</a>
-        <a href="#">Contacto</a>
-    </nav>
+    <h1 id="title">Tu Evento</h1>
 
-    <main>
+    <div class="header-buttons">
+        <button id="darkModeBtn">🌙</button>
+        <button id="languageBtn">English</button>
+        <button id="menuBtn">☰</button>
+    </div>
 
-<section>
-    <h2>Contacto</h2>
+</header>
 
-    <form>
+<nav id="menu">
+    <a id="home" href="#">Inicio</a>
+    <a id="servicesLink" href="#">Servicios</a>
+    <a id="contactLink" href="#">Contacto</a>
+</nav>
 
-        <label for="name">Nombre:</label><br>
-        <input type="text" id="name" name="name" required>
+<main>
 
-        <br><br>
+    <section>
 
-        <label for="email">Correo:</label><br>
-        <input type="email" id="email" name="email" required>
+        <h2 id="servicesTitle">Servicios</h2>
 
-        <br><br>
+        <article>
+            <h3 id="service1Title">Alquiler de Vajillas</h3>
+            <p id="service1Description">
+                Contamos con vajillas para eventos pequeños y grandes.
+            </p>
+        </article>
 
-        <label for="phone">Teléfono:</label><br>
-        <input type="tel" id="phone" name="phone">
+        <article>
+            <h3 id="service2Title">Servicio de Garzones</h3>
+            <p id="service2Description">
+                Personal capacitado para atender cualquier tipo de evento.
+            </p>
+        </article>
 
-        <br><br>
+    </section>
 
-        <label for="message">Mensaje:</label><br>
-        <textarea id="message" name="message" rows="5" required></textarea>
+    <section>
 
-        <br><br>
+        <h2 id="contactTitle">Contacto</h2>
 
-        <button type="submit">Enviar</button>
+        <form>
 
-    </form>
-</section>
+            <label id="labelName" for="name">Nombre</label>
+            <input type="text" id="name">
 
-    </main>
+            <label id="labelEmail" for="email">Correo</label>
+            <input type="email" id="email">
 
-    <footer>
-        <p>&copy; 2026 Tu Evento</p>
-    </footer>
+            <label id="labelPhone" for="phone">Teléfono</label>
+            <input type="tel" id="phone">
+
+            <label id="labelMessage" for="message">Mensaje</label>
+            <textarea id="message" rows="5"></textarea>
+
+            <button id="sendButton" type="submit">
+                Enviar
+            </button>
+
+        </form>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>&copy; 2026 Tu Evento</p>
+</footer>
+
+<script src="script.js"></script>
 
 </body>
 </html>

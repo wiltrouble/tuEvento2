@@ -1,125 +1,217 @@
-/* General styles */
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    color: #333;
+/* ---------- General ---------- */
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f4f4;
+    color:#333;
 }
 
-/* Header */
-header {
-    background-color: #2c3e50;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    border: 2px solid red;
+/* ---------- Header ---------- */
+
+header{
+    background:#2c3e50;
+    color:white;
+    padding:20px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    border:2px solid red;
 }
 
-/* Navigation */
-nav {
-    background-color: #ecf0f1;
-    border: 2px solid orange;
-    padding: 15px;
-
-    /* Flexbox */
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+.header-buttons{
+    display:flex;
+    gap:10px;
 }
 
-nav a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
+button{
+    cursor:pointer;
+    padding:10px 15px;
 }
 
-nav a:hover {
-    color: #3498db;
+/* ---------- Navigation ---------- */
+
+nav{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+
+    background:#ecf0f1;
+
+    padding:15px;
+
+    border:2px solid orange;
 }
 
-/* Main */
-main {
-    margin: 20px;
-    padding: 20px;
-    background-color: white;
-    border: 2px solid blue;
+nav a{
+    text-decoration:none;
+    color:#333;
+    font-weight:bold;
 }
 
-/* Section */
-section {
-    border: 2px solid green;
-    padding: 20px;
-    background-color: #fafafa;
+nav a:hover{
+    color:#3498db;
 }
 
-/* Articles */
-article {
-    border: 2px solid purple;
-    background-color: white;
-    padding: 15px;
-    margin-top: 15px;
+/* ---------- Main ---------- */
+
+main{
+    margin:20px;
+    padding:20px;
+
+    background:white;
+
+    border:2px solid blue;
 }
 
-/* Footer */
-footer {
-    background-color: #2c3e50;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    border: 2px solid black;
+/* ---------- Section ---------- */
+
+section{
+    border:2px solid green;
+    padding:20px;
+    margin-bottom:20px;
+    background:#fafafa;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* ---------- Articles ---------- */
 
-    nav {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
-    main {
-        margin: 10px;
-        padding: 15px;
-    }
-
-    section {
-        padding: 15px;
-    }
-
-    article {
-        margin-top: 10px;
-    }
+article{
+    border:2px solid purple;
+    background:white;
+    padding:15px;
+    margin-top:15px;
 }
 
-/* Contact Form */
-form {
-    background-color: white;
-    padding: 20px;
-    border: 2px solid gray;
-    margin-top: 15px;
-}
+/* ---------- Form ---------- */
 
-label {
-    font-weight: bold;
+form{
+
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+
 }
 
 input,
-textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    box-sizing: border-box;
+textarea{
+
+    padding:10px;
+    font-size:16px;
+
 }
 
-button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
+form button{
+
+    width:150px;
+    background:#3498db;
+    color:white;
+    border:none;
+
 }
 
-button:hover {
-    background-color: #2980b9;
+form button:hover{
+
+    background:#2980b9;
+
+}
+
+/* ---------- Footer ---------- */
+
+footer{
+
+    background:#2c3e50;
+    color:white;
+    text-align:center;
+
+    padding:20px;
+
+    border:2px solid black;
+
+}
+
+/* ---------- Dark Mode ---------- */
+
+.dark-mode{
+
+    background:#222;
+    color:white;
+
+}
+
+.dark-mode main,
+.dark-mode section,
+.dark-mode article{
+
+    background:#333;
+    color:white;
+
+}
+
+.dark-mode nav{
+
+    background:#444;
+
+}
+
+.dark-mode nav a{
+
+    color:white;
+
+}
+
+.dark-mode input,
+.dark-mode textarea{
+
+    background:#555;
+    color:white;
+    border:1px solid white;
+
+}
+
+/* ---------- Mobile ---------- */
+
+#menuBtn{
+
+    display:none;
+
+}
+
+@media(max-width:768px){
+
+    header{
+
+        flex-direction:column;
+        gap:15px;
+
+    }
+
+    #menuBtn{
+
+        display:block;
+
+    }
+
+    nav{
+
+        display:none;
+        flex-direction:column;
+        align-items:center;
+
+    }
+
+    nav.show{
+
+        display:flex;
+
+    }
+
+    main{
+
+        margin:10px;
+        padding:15px;
+
+    }
+
 }
