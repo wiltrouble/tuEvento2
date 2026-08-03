@@ -1,47 +1,29 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Página</title>
+<section>
+    <h2>Contacto</h2>
 
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <form>
 
-<body>
+        <label for="name">Nombre:</label><br>
+        <input type="text" id="name" name="name" required>
 
-    <header>
-        <h1>Tu Evento</h1>
-    </header>
+        <br><br>
 
-    <nav>
-        <a href="#">Inicio</a>
-        <a href="#">Servicios</a>
-        <a href="#">Contacto</a>
-    </nav>
+        <label for="email">Correo:</label><br>
+        <input type="email" id="email" name="email" required>
 
-    <main>
+        <br><br>
 
-        <section>
-            <h2>Servicios</h2>
+        <label for="phone">Teléfono:</label><br>
+        <input type="tel" id="phone" name="phone">
 
-            <article>
-                <h3>Alquiler de Vajillas</h3>
-                <p>Contamos con vajillas para eventos pequeños y grandes.</p>
-            </article>
+        <br><br>
 
-            <article>
-                <h3>Servicio de Garzones</h3>
-                <p>Personal capacitado para atender cualquier tipo de evento.</p>
-            </article>
+        <label for="message">Mensaje:</label><br>
+        <textarea id="message" name="message" rows="5" required></textarea>
 
-        </section>
+        <br><br>
 
-    </main>
+        <button type="submit">Enviar</button>
 
-    <footer>
-        <p>&copy; 2026 Tu Evento</p>
-    </footer>
-
-</body>
-</html>
+    </form>
+</section>
