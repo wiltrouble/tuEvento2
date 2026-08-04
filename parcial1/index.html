@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Café El Trigal</title>
+</head>
+<body>
+  <header>
+    <h1 class="primaryText">Café El Trigal</h1>
+  </header>
+
+  <nav id="menu">
+    <a id="home" href="#home">Inicio</a>
+    <a id="cafe" href="#products">Nuestro café</a>
+    <a id="contact" href="#contact">Contacto</a>
+  </nav>
+
+  <main>
+    <section id="cafeCard" class="card">
+      <h2 class="primaryText">Nuestro café</h2>
+      <p class="secondaryText">
+        El mejor Cafe directamente desde los sembradios mas profundos de Bolivia hasta
+        tu mesa para que compartas un momento muy importante funto a tu familia.
+      </p>
+      <ul>
+        <li>Café americano - Bs 12</li>
+        <li>Capuchino - Bs 18</li>
+        <li>Submarino - Bs 15</li>
+      </ul>
+    </section>
+
+    <section id="contactCard" class="card">
+      <h2 class="primaryText">Hax tu pedido</h2>
+      <form>
+        <input type="text" placeholder="Nombre Completo" id="nombre" required />
+        <input type="email" placeholder="Correo Electronico" id="correo" required />
+        <textarea id="pedido">
+        </textarea>
+      </form>
+
+      <button type="button" id="btn-confirmar">Enviar</button>
+      <p id="message" class="mensaje">Pedido recibido - te atiende Wilson Lopez</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; Parcial 1 - Wilson Lopez - 3 de Agosto de 2026</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

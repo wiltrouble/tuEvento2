@@ -1,0 +1,56 @@
+:root {
+  --primary-color: #D5E7F2;
+  --secondary-color: #D99036;
+  --tertiary-color: #A67951;
+  --quaternary-color: #F2BC8D;
+  --quinary-color: #261008;
+}
+
+body {
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background: var(--quaternary-color);
+    color:#333;
+}
+
+header {
+  background: var(--tertiary-color);
+  color:white;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+footer{
+
+    background: var(--tertiary-color);
+    color:white;
+    text-align:center;
+    padding:20px;
+
+}
+
+.card {
+    background:var(--quaternary-color);
+    padding:15px;
+    margin-top:15px;
+}
+
+.primaryText {
+  color: var(--quinary-color)
+}
+
+.mensaje {
+  display: none;
+}
+
+.secondaryText {
+  color: var(--secondary-color)
+}
+
+form{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
