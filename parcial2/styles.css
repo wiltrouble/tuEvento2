@@ -1,0 +1,48 @@
+body {
+  font-family: Arial;
+  width: 500px;
+  margin: 30px auto;
+}
+
+header {
+  padding: 10px;
+}
+
+main {
+  padding: 20px;
+  margin-top: 10px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input {
+  width: 95%;
+  padding: 5px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 7px 15px;
+}
+
+footer {
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.aviso {
+  display: none;
+}
+
+.aviso.error {
+  display: block;
+  color: #b00020;
+}
+
+.aviso.exito {
+  display: block;
+  color: #1b7f3b;
+}
