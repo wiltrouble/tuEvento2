@@ -1,5 +1,11 @@
 <?php
-
+echo "
+<head>
+    <meta charset='UTF-8'>
+    <title>Mi Negocio</title>
+    <link rel='stylesheet' href='styles.css'>
+</head>
+";
 echo "<h1>Pedido recibido en Heladería Doña Nieve</h1>";
 
 echo "<p>Nombre: " . $_POST["nombre"] . "</p>";
