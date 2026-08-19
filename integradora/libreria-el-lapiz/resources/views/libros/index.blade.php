@@ -16,7 +16,7 @@
     <ul>
         @foreach ($libros as $libro)
             <li>
-                {{ $libro->titulo }} — Bs {{ $libro->precio }}
+                {{ $libro->titulo }} —> Bs {{ $libro->precio }}
             </li>
         @endforeach
     </ul>
