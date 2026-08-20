@@ -54,4 +54,38 @@
             <a class="button" href="{{ url('/cotizaciones/rapida') }}">Crear</a>
         </div>
     </div>
+
+    <h3>Teléfono de WhatsApp</h3>
+    <p>Este número se usa cuando un cliente comparte una cotización rápida por WhatsApp.</p>
+
+    @if ($errors->any())
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
+
+    <form method="POST" action="{{ url('/perfil') }}">
+        @csrf
+
+        <p>
+            <label for="name">Nombre</label><br>
+            <input id="name" type="text" name="name" value="{{ old('name', auth()->user()->name) }}">
+        </p>
+
+        <p>
+            <label for="phone">Teléfono (WhatsApp)</label><br>
+            <input id="phone" type="text" name="phone" value="{{ old('phone', auth()->user()->phone) }}">
+        </p>
+
+        <p>
+            <label for="password">Nueva contraseña (opcional)</label><br>
+            <input id="password" type="password" name="password">
+        </p>
+
+        <p>
+            <button type="submit">Guardar perfil</button>
+        </p>
+    </form>
 @endsection

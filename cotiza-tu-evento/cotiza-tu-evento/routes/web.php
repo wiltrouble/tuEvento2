@@ -5,20 +5,80 @@ use App\Models\Client;
 use App\Models\Product;
 use App\Models\Quotation;
 use App\Models\QuotationItem;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('dashboard', [
-        'clientsCount' => Client::count(),
-        'categoriesCount' => Category::count(),
-        'productsCount' => Product::count(),
-        'quotationsCount' => Quotation::count(),
-        'pendingCount' => Quotation::where('status', 'pending')->count(),
-        'approvedCount' => Quotation::where('status', 'approved')->count(),
+    return view('welcome', [
+        'products' => Product::where('active', true)->get(),
     ]);
 });
 
+Route::get('/login', function () {
+    return view('auth.login', [
+        'needsAdmin' => User::count() === 0,
+    ]);
+})->middleware('guest')->name('login');
+
+Route::post('/login', function (Request $request) {
+    $validated = $request->validateWithBag('login', [
+        'email' => 'required|email',
+        'password' => 'required',
+    ], [
+        'email.required' => 'El correo electrónico es obligatorio.',
+        'email.email' => 'El correo electrónico no es válido.',
+        'password.required' => 'La contraseña es obligatoria.',
+    ]);
+
+    if (! Auth::attempt($validated, $request->boolean('remember'))) {
+        return back()
+            ->withErrors(['email' => 'Las credenciales no son válidas.'], 'login')
+            ->onlyInput('email');
+    }
+
+    $request->session()->regenerate();
+
+    return redirect('/dashboard');
+});
+
+Route::post('/registro', function (Request $request) {
+    if (User::count() > 0) {
+        abort(404);
+    }
+
+    $validated = $request->validateWithBag('registro', [
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'phone' => 'required',
+        'password' => 'required|min:6',
+    ], [
+        'name.required' => 'El nombre es obligatorio.',
+        'email.required' => 'El correo electrónico es obligatorio.',
+        'email.email' => 'El correo electrónico no es válido.',
+        'email.unique' => 'Ese correo electrónico ya está registrado.',
+        'phone.required' => 'El teléfono es obligatorio.',
+        'password.required' => 'La contraseña es obligatoria.',
+        'password.min' => 'La contraseña debe tener al menos 6 caracteres.',
+    ]);
+
+    $user = User::create($validated);
+    Auth::login($user);
+    $request->session()->regenerate();
+
+    return redirect('/dashboard');
+});
+
+Route::post('/logout', function (Request $request) {
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/');
+});
+
+Route::middleware('auth')->group(function () {
 Route::get('/clientes', function () {
     $clients = Client::all();
 
@@ -161,6 +221,7 @@ Route::get('/cotizaciones', function (Request $request) {
         'status' => $status,
     ]);
 });
+});
 
 Route::get('/cotizaciones/rapida', function () {
     $products = Product::where('active', true)->get();
@@ -247,6 +308,10 @@ Route::post('/cotizaciones/rapida', function (Request $request) {
         'Dirección: '.$validated['event_address'],
     ];
 
+    if (! empty($validated['phone'])) {
+        $shareLines[] = 'Teléfono del cliente: '.$validated['phone'];
+    }
+
     if (! empty($validated['notes'])) {
         $shareLines[] = 'Notas: '.$validated['notes'];
     }
@@ -262,9 +327,9 @@ Route::post('/cotizaciones/rapida', function (Request $request) {
     $shareLines[] = 'Total: '.$subtotal;
 
     $shareText = implode("\n", $shareLines);
-    $phoneDigits = preg_replace('/\D+/', '', (string) ($validated['phone'] ?? ''));
-    $whatsappUrl = $phoneDigits !== ''
-        ? 'https://wa.me/'.$phoneDigits.'?text='.rawurlencode($shareText)
+    $adminPhone = preg_replace('/\D+/', '', (string) User::query()->orderBy('id')->value('phone'));
+    $whatsappUrl = $adminPhone !== ''
+        ? 'https://wa.me/'.$adminPhone.'?text='.rawurlencode($shareText)
         : 'https://wa.me/?text='.rawurlencode($shareText);
 
     return view('cotizaciones.rapida-resultado', [
@@ -280,6 +345,73 @@ Route::post('/cotizaciones/rapida', function (Request $request) {
         'whatsappUrl' => $whatsappUrl,
     ]);
 });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard', [
+            'clientsCount' => Client::count(),
+            'categoriesCount' => Category::count(),
+            'productsCount' => Product::count(),
+            'quotationsCount' => Quotation::count(),
+            'pendingCount' => Quotation::where('status', 'pending')->count(),
+            'approvedCount' => Quotation::where('status', 'approved')->count(),
+        ]);
+    });
+
+    Route::post('/perfil', function (Request $request) {
+        $validated = $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'password' => 'nullable|min:6',
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'phone.required' => 'El teléfono es obligatorio.',
+            'password.min' => 'La contraseña debe tener al menos 6 caracteres.',
+        ]);
+
+        $user = $request->user();
+        $user->name = $validated['name'];
+        $user->phone = $validated['phone'];
+
+        if (! empty($validated['password'])) {
+            $user->password = $validated['password'];
+        }
+
+        $user->save();
+
+        return redirect('/dashboard');
+    });
+
+    Route::get('/usuarios', function () {
+        return view('usuarios.index', [
+            'users' => User::all(),
+        ]);
+    });
+
+    Route::get('/usuarios/nuevo', function () {
+        return view('usuarios.nuevo');
+    });
+
+    Route::post('/usuarios/nuevo', function (Request $request) {
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required',
+            'password' => 'required|min:6',
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'El correo electrónico no es válido.',
+            'email.unique' => 'Ese correo electrónico ya está registrado.',
+            'phone.required' => 'El teléfono es obligatorio.',
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos 6 caracteres.',
+        ]);
+
+        User::create($validated);
+
+        return redirect('/usuarios');
+    });
 
 Route::get('/cotizaciones/nueva', function () {
     $clients = Client::all();
@@ -536,4 +668,5 @@ Route::get('/cotizaciones/{id}', function ($id) {
     return view('cotizaciones.show', [
         'quotation' => $quotation,
     ]);
+});
 });

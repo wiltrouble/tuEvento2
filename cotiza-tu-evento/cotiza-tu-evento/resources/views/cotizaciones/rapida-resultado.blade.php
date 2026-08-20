@@ -55,7 +55,7 @@
     <p>
         <button type="button" id="copy-button">Copiar</button>
         <a class="button" href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer">Compartir por WhatsApp</a>
-        <a href="{{ url('/cotizaciones/rapida') }}">Nueva cotización rápida</a>
+        <a href="{{ auth()->check() ? url('/cotizaciones/rapida') : url('/') }}">Nueva cotización rápida</a>
     </p>
 
     <p id="copy-status"></p>

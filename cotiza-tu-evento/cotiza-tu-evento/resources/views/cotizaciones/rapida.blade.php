@@ -5,7 +5,7 @@
 @section('content')
     <h2>Cotización rápida</h2>
 
-    <p>Esta cotización es temporal. No se guarda en la base de datos. Puede copiarla o enviarla por WhatsApp.</p>
+    <p>Esta cotización es temporal. No se guarda en la base de datos. WhatsApp usa el teléfono del administrador.</p>
 
     @if ($errors->any())
         <ul>
@@ -26,7 +26,7 @@
         </p>
 
         <p>
-            <label for="phone">Teléfono (WhatsApp)</label><br>
+            <label for="phone">Teléfono del cliente</label><br>
             <input id="phone" type="text" name="phone" value="{{ old('phone') }}">
         </p>
 

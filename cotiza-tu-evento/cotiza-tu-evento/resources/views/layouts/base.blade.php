@@ -87,13 +87,37 @@
             .card a {
                 color: #000;
             }
+
+            header .header-auth a,
+            header .header-auth button {
+                display: inline-block;
+                padding: 6px 12px;
+                border: 1px solid #94a3b8;
+                background: transparent;
+                color: #fff;
+                text-decoration: none;
+            }
         </style>
     </head>
     <body class="flex min-h-screen flex-col bg-slate-50 text-slate-900">
         <header class="bg-slate-900 text-white">
-            <div class="mx-auto max-w-6xl px-4 py-4 sm:px-6">
-                <h1 class="m-0 text-lg font-semibold sm:text-2xl">Cotiza tu evento</h1>
-                <p class="mt-1 mb-0 hidden text-sm text-slate-300 sm:block">Cotizaciones de renta para eventos</p>
+            <div class="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                <div>
+                    <h1 class="m-0 text-lg font-semibold sm:text-2xl">Cotiza tu evento</h1>
+                    <p class="mt-1 mb-0 hidden text-sm text-slate-300 sm:block">Cotizaciones de renta para eventos</p>
+                </div>
+
+                <div class="header-auth">
+                    @auth
+                        <span class="mr-2 text-sm text-slate-300">{{ auth()->user()->name }}</span>
+                        <form method="POST" action="{{ url('/logout') }}" class="inline">
+                            @csrf
+                            <button type="submit">Cerrar sesión</button>
+                        </form>
+                    @else
+                        <a href="{{ url('/login') }}">Iniciar sesión</a>
+                    @endauth
+                </div>
             </div>
         </header>
 
@@ -103,6 +127,13 @@
                     <a
                         href="{{ url('/') }}"
                         class="rounded px-3 py-2 text-sm {{ request()->is('/') ? 'bg-slate-700 font-medium' : 'hover:bg-slate-700' }}"
+                    >
+                        Inicio
+                    </a>
+                    @auth
+                    <a
+                        href="{{ url('/dashboard') }}"
+                        class="rounded px-3 py-2 text-sm {{ request()->is('dashboard') ? 'bg-slate-700 font-medium' : 'hover:bg-slate-700' }}"
                     >
                         Dashboard
                     </a>
@@ -136,6 +167,13 @@
                     >
                         Cotización rápida
                     </a>
+                    <a
+                        href="{{ url('/usuarios') }}"
+                        class="rounded px-3 py-2 text-sm {{ request()->is('usuarios*') ? 'bg-slate-700 font-medium' : 'hover:bg-slate-700' }}"
+                    >
+                        Usuarios
+                    </a>
+                    @endauth
                 </div>
             </div>
         </nav>
